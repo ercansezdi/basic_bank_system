@@ -403,7 +403,6 @@ int user_menu(string username, string passwd)
 			if(value > 0 )
 				for(int i = 0 ; i < user_limit ; i++)
 				{	
-				
 					if(user[i].username == username)	
 					{
 						if(user[i].balance > value)
@@ -423,8 +422,67 @@ int user_menu(string username, string passwd)
 		}
 		else if (result == "3") // para gönder
 		{
-			break;	
-			
+			class_1.clear_screen();
+			string usr_name, control = "False";
+			int syc = 0;
+			cout << "Para Gönderilecek hesap Adýný Giriniz :" << endl;
+			cout << ">>";
+			cin  >> usr_name;
+			for(int j = 0 ; j < user_limit ; j++)
+			{	
+				if(username == user[j].username)
+					break;
+				syc++;			
+			}
+			for(int i = 0 ; i < user_limit ; i++)
+			{
+				
+				if(user[i].username == usr_name && usr_name != username) // True User
+				{
+					string real_value_recovery;
+					control = "True";
+					cout << "Gönderilecek para miktari :" << endl;
+					cout << ">> ";
+					cin  >> real_value;
+					real_value_recovery  = real_value;
+					stringstream geek(real_value); 
+    				geek >> value; 
+					if(value > 0 && user[syc].balance > value)
+					{
+						user[i].balance += value;
+						real_value = username + " adlý hesap size " + real_value + " TL  gönderdi.";
+						user[i].action.push_back(real_value); 
+						for(int j = 0 ; j < user_limit ; j++)
+						{
+							if(username == user[j].username)
+							{
+								user[j].balance -= value;
+								real_value = usr_name + " adlý hesaba " + real_value_recovery + " TL gönderdiniz.";
+								user[j].action.push_back(real_value); 
+							}
+						}
+						
+					}
+					else
+					{
+						class_1.clear_screen();
+						cout << "!_!_! Yetersiz Bakiye !_!_!";
+						class_1.sleep(2);
+						class_1.clear_screen();
+					}
+					
+				}
+				
+			}
+			if(control == "False")
+			{
+				class_1.clear_screen();
+				cout << "!_!_! Hatalý Hesap Bilgisi Girdiniz. !_!_!";
+				class_1.sleep(2);
+				class_1.clear_screen();
+				
+			}
+			class_1.clear_screen();
 		}
 		else if(result == "4") // müþteri hareketleri
 		{
