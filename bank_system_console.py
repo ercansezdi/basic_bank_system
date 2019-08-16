@@ -72,7 +72,7 @@ class transfer_details:
     def __init__(self, data):
         self.datas = data
     def deposit(self, name):
-        money = input("How much do you wish to deposite ? ")
+        money = str(input("How much do you wish to deposite ? "))
         while int(money) < 1:
             print("Try Again...")
             money = input("How much do you wish to deposite ? ")
@@ -81,10 +81,10 @@ class transfer_details:
 
     def withdraw(self, name):
         activities,users = self.datas.request_data()
-        money = input("How much do you wish to withdraw ? ")
+        money = str(input("How much do you wish to withdraw ? "))
         while int(money) > activities[name][0]:
             print("Try Again...")
-            money = input("How much do you wish to withdraw ? ")
+            money = str(input("How much do you wish to withdraw ? "))
         self.datas.add_activities(name, money, "withdraw")
         print(money + " TL Has been withdrawed from your account")
     def transfer(self, name):
@@ -92,9 +92,9 @@ class transfer_details:
         user_names = []
         for i in users:
             user_names.append(i)
-        transferName = input("For who do you wish to transfer to ?")
+        transferName = str(input("For who do you wish to transfer to ?"))
         if name in user_names and name != transferName:
-            transferMoney = input("How much would like to transfer ? ")
+            transferMoney = str(input("How much would like to transfer ? "))
             if int(transferMoney) < activities[name][0]:
                 self.datas.add_activities(name, transferMoney, "transfer", transferName)
                 print("Transferring " + transferMoney + "TL to " + transferName + "Succeeded.")
@@ -118,18 +118,18 @@ class transfer_details:
 
 if __name__ == "__main__":
     data = datas()
-    operation = transfer_details(data)
+    operation_ = transfer_details(data)
     program_end = False
     while not (program_end):
         data.continuous_structures("one")
-        operation = input(">>>")
+        operation = str(input(">>>"))
         while operation != "1" and operation != "2":
             print("Try again...")
-            operation = input(">>>")
+            operation = str(input(">>>"))
         if operation == "1":
             keep_going_1 = True
-            username = input("Enter your username: ")
-            passwd = input("Enter your password:")
+            username = str(input("Enter your username: "))
+            passwd = str(input("Enter your password:"))
             while keep_going_1:
                 if data.user_verification(username, passwd):
                     print("Login Success!")
@@ -138,25 +138,25 @@ if __name__ == "__main__":
                     keep_going_2 = True
                     while keep_going_2:
                         data.continuous_structures("two")
-                        choose = input(">>>")
+                        choose = str(input(">>>"))
                         while choose != "1" and choose != "2" and choose != "3" and choose != "4" and choose != "5":
                             print("Try again...")
-                            choose = input(">>>")
+                            choose = str(input(">>>"))
                         if choose == "1":
-                            operation.withdraw(username)
+                            operation_.withdraw(username)
                         elif choose == "2":
-                            operation.deposit(username)
+                            operation_.deposit(username)
                         elif choose == "3":
-                            operation.transfer(username)
+                            operation_.transfer(username)
                         elif choose == "4":
-                            operation.details(username, passwd)
+                            operation_.details(username, passwd)
                         else:
                             keep_going_1 = False
                             keep_going_2 = False
                 else:
                     print("Try Again...")
-                    username = input("Enter your username: ")
-                    passwd = input("Enter your password:")
+                    username = str(input("Enter your username: "))
+                    passwd = str(input("Enter your password:"))
 
 
         else:
