@@ -40,7 +40,7 @@ class datas:
             print("|-----------------------------------|")
             print("     Basic Bank System v.01      ")
             print("|-----------------------------------|")
-            print("    Mersin, Turkey " + datetime.today().strftime('%d-%m-%y  %H:%M:%S'))
+            print(" Mersin, Turkey " + datetime.today().strftime('%d-%m-%y  %H:%M:%S'))
             print("|-----------------------------------|")
             print("< Choose what do you want to do. >")
             print("< 1.Login > ")
