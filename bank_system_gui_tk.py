@@ -14,6 +14,24 @@ class datas:
     def request_data(self):
         return self.activities,self.members
 
+    def add_activities(self,money,user,operation,transfer_user):
+
+        if operation == "deposit":
+            self.activities[user][0] = self.activities[user][0] + int(money)
+            self.activities[user][1].append(
+                "deposid " + str(money) + " " + datetime.today().strftime('%d-%m-%y  %H:%M:%S'))
+        elif operation == "withdraw":
+            self.activities[user][0] = self.activities[user][0] - int(money)
+            self.activities[user][1].append(
+                "withdrawed " + str(money) + " " + datetime.today().strftime('%d-%m-%y  %H:%M:%S'))
+        elif operation == "transfer":
+            self.activities[user][0] = self.activities[user][0] - int(money)
+            self.activities[user][1].append("Transferred " + str(money) + " " + datetime.today().strftime('%d-%m-%y  %H:%M:%S'))
+            self.activities[transfer_user][0] = self.activities[transfer_user][0] + int(money)
+            self.activities[transfer_user][1].append("Transferred to me from " +transfer_user + " " +str(money) + " " + datetime.today().strftime('%d-%m-%y  %H:%M:%S'))
+
+
+
 class basic_bank_system_gui(Frame):
     def __init__(self,parent):
         Frame.__init__(self,parent)
@@ -23,6 +41,7 @@ class basic_bank_system_gui(Frame):
         self.loginPage = Frame(self.parent)
         self.userLoginPage = Frame(self.parent)
         self.loginUser = Frame(self.parent)
+        self.userOperations = Frame(self.parent)
 
 
         #Classes
@@ -71,24 +90,58 @@ class basic_bank_system_gui(Frame):
     def login_user(self):
         self.userLoginPage.grid_remove()
         self.loginUser.grid(row=0,column=0)
-        button1 = Button(self.loginUser,text = "Withdraw Money",wraplength=750,anchor="center",height=1,width=13,command=lambda: self.withdraw_deposit_money("deposit"))
+        button1 = Button(self.loginUser,text = "Withdraw Money",wraplength=750,anchor="center",height=1,width=13,command=lambda: self.user_operations("withdraw"))
         button1.grid(row=0,column=0)
-        button2 = Button(self.loginUser,text = "Deposit Money",wraplength=750,anchor="center",height=1,width=13,command=self.checking_data)
+        button2 = Button(self.loginUser,text = "Deposit Money",wraplength=750,anchor="center",height=1,width=13,command=lambda: self.user_operations("deposit"))
         button2.grid(row=1,column=0)
-        button3 = Button(self.loginUser,text = "Transfer Money",wraplength=750,anchor="center",height=1,width=13,command=self.checking_data)
+        button3 = Button(self.loginUser,text = "Transfer Money",wraplength=750,anchor="center",height=1,width=13,command=lambda: self.user_operations("tranfer_money"))
         button3.grid(row=2,column=0)
-        button4 = Button(self.loginUser,text = "My Account Information",wraplength=750,anchor="center",height=1,width=13,command=self.checking_data)
+        button4 = Button(self.loginUser,text = "My Account Information",wraplength=750,anchor="center",height=1,width=13,command=lambda: self.user_operations("info"))
         button4.grid(row=3,column=0)
         button5 = Button(self.loginUser,text = "Logout",wraplength=750,anchor="center",height=1,width=13,command=lambda:[self.loginUser.grid_remove(),self.login_page()])
         button5.grid(row=4,column=0)
-    def withdraw_deposit_money(self,process):
+    def user_operations(self,process):
+        self.userOperations.grid(row=0,column=0)
+        self.loginUser.grid_remove()
+
         if process == "withdraw":
-            pass
+            withdrawLabel = Label(self.userOperations,text="How much do you wish to withdraw ",justify = LEFT,font ="Helvetica 15 bold italic")
+            withdrawLabel.grid(row=0,column=0)
+            withdrawEntry =  Entry(self.userLoginPage,font ="Helvetica 12 bold italic")
+            withdrawEntry.grid(row=1,column=0)
+            withdrawButton = Button(self.loginUser,text = "Withdraw Money",wraplength=750,anchor="center",height=1,width=13,command=lambda: self.operation_control("withdraw",withdrawEntry.get(),"empty"))
+            withdrawButton.grid(row=2,column=0)
         elif process == "deposit":
-            print('xxxx')
+            depositLabel = Label(self.userOperations,text="How much do you wish to deposite",justify = LEFT,font ="Helvetica 15 bold italic")
+            depositLabel.grid(row=0,column=0)
+            depositEntry =  Entry(self.userOperations,font ="Helvetica 12 bold italic")
+            depositEntry.grid(row=1,column=0)
+            depositButton = Button(self.userOperations,text = "Deposit Money",wraplength=750,anchor="center",height=1,width=13,command=lambda: self.operation_control("deposit",depositEntry.get(),"empty"))
+            depositButton.grid(row=2,column=0)
+        elif  process == "tranfer_money":
+            pass
         else:
             pass
+    def operation_control(self,operation,money,transfer_user):
+        if operation == "withdraw":
+            if int(money) > 0:
+                pass
+            else:
+                messagebox.showinfo("Warning",  "Not enough balance")
+        elif operation == "deposit":
+            if int(money) > 0:
+                self.data.add_activities(money,self.usernameLoginEntry.get(),operation,transfer_user)
+                string = "Deposit " + money + " TL." ;
+                messagebox.showinfo("Warning", string)
+                self.userOperations.grid_remove()
+                self.login_user()
+            else:
+                messagebox.showinfo("Warning", "Wrong money entry")
 
+        elif operation == "tranfer_money":
+            pass
+        else:
+            pass
 
 
 
