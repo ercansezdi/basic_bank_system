@@ -2,7 +2,7 @@
 # -*- coding: utf8 -*-
 from tkinter import messagebox
 from tkinter import *
-
+import tkinter.ttk
 from datetime import datetime
 from time import strftime
 
@@ -13,7 +13,6 @@ class datas:
 
     def request_data(self):
         return self.activities,self.members
-
     def add_activities(self,money,user,operation,transfer_user):
 
         if operation == "deposit":
@@ -26,16 +25,16 @@ class datas:
                 "withdrawed " + str(money) + " TL " + datetime.today().strftime('%d-%m-%y  %H:%M:%S'))
         elif operation == "transfer":
             self.activities[user][0] = self.activities[user][0] - int(money)
-            self.activities[user][1].append("Transferred " + str(money) + " " + datetime.today().strftime('%d-%m-%y  %H:%M:%S'))
+            self.activities[user][1].append("Transferred " + str(money) + " TL " + datetime.today().strftime('%d-%m-%y  %H:%M:%S'))
             self.activities[transfer_user][0] = self.activities[transfer_user][0] + int(money)
-            self.activities[transfer_user][1].append("Transferred to me from " +transfer_user + " " +str(money) + " " + datetime.today().strftime('%d-%m-%y  %H:%M:%S'))
+            self.activities[transfer_user][1].append("Transferred to me from " + transfer_user + " " +str(money) + " TL " + datetime.today().strftime('%d-%m-%y  %H:%M:%S'))
 
 
 class basic_bank_system_gui(Frame):
     def __init__(self,parent):
         Frame.__init__(self,parent)
         self.parent = parent
-        self.parent.geometry('600x600')
+        self.parent.geometry('600x325')
         # Frames
         self.loginPage = Frame(self.parent)
         self.userLoginPage = Frame(self.parent)
@@ -51,19 +50,20 @@ class basic_bank_system_gui(Frame):
         self.login_page()
     def login_page(self):
         self.loginPage.grid(row=0,column=0)
-        self.text_1.grid(row=0,column=2,rowspan = 2,columnspan=3)
-        self.text_2.grid(row=2,column=2,rowspan=2,columnspan=3)
-        self.buttonUser.grid(row=4,column=2,rowspan=2,columnspan=3)
-        self.button_login_exit.grid(row=6,column=2,rowspan=2,columnspan=3)
+        self.text_1.grid(row=0,column=2,rowspan = 2,columnspan=3,pady=5)
+        self.text_2.grid(row=2,column=2,rowspan=2,columnspan=3,pady=5)
+        self.buttonUser.grid(row=4,column=2,rowspan=2,columnspan=3,padx=3,pady=5)
+        self.button_login_exit.grid(row=6,column=2,rowspan=2,columnspan=3,padx=3,pady=5)
 
     def user_login_page(self):
         self.loginPage.grid_remove()
         self.userLoginPage.grid(row=0,column=0)
-        self.loginUsername.grid(row=0,column=0)
-        self.usernameLoginEntry.grid(row=1,column=0)
-        self.loginPassword.grid(row=2,column=0)
-        self.passwordLoginEntry.grid(row=3,column=0)
-        self.button_user.grid(row=4,column=0)
+
+        self.loginUsername.grid(row=0,column=1,columnspan=3,rowspan=2)
+        self.usernameLoginEntry.grid(row=2,column=1,columnspan=3,rowspan=2)
+        self.loginPassword.grid(row=4,column=1,columnspan=3,rowspan=2)
+        self.passwordLoginEntry.grid(row=6,column=1,columnspan=3,rowspan=2)
+        self.button_user.grid(row=8,column=1,columnspan=3,rowspan=2)
 
     def checking_data(self):
         username = self.usernameLoginEntry.get()
@@ -88,16 +88,16 @@ class basic_bank_system_gui(Frame):
 
     def defines(self):
         #login_page
-        self.text_1 = Label(self.loginPage,text = "Basic Bank System v.01 ",justify = LEFT,font ="Helvetica 15 bold italic")
-        self.text_2 = Label(self.loginPage,text = " Mersin, Turkey " + datetime.today().strftime('%d-%m-%y  %H:%M:%S'),justify = LEFT,font ="Helvetica 15 bold italic")
-        self.buttonUser = Button(self.loginPage,text = "Login",wraplength=750,anchor="center",height=1,width=13,command=self.user_login_page)
-        self.button_login_exit = Button(self.loginPage,text = "Exit",wraplength=750,anchor="center",height=1,width=13,command = self.parent.destroy)
+        self.text_1 = Label(self.loginPage,text = "Basic Bank System v.03 ",justify = LEFT,font ="Helvetica 25 bold italic")
+        self.text_2 = Label(self.loginPage,text = " Mersin, Turkey " + datetime.today().strftime('%d-%m-%y  %H:%M:%S'),justify = LEFT,font ="Helvetica 25 bold italic")
+        self.buttonUser = Button(self.loginPage,text = "Login",wraplength=750,anchor="center",height=4,width=57,command=self.user_login_page)
+        self.button_login_exit = Button(self.loginPage,text = "Exit",wraplength=750,anchor="center",height=4,width=57,command = self.parent.destroy)
         #user_login_page
-        self.loginUsername = Label(self.userLoginPage,text="Enter your username",justify = LEFT,font ="Helvetica 15 bold italic")
-        self.usernameLoginEntry = Entry(self.userLoginPage,font ="Helvetica 12 bold italic")
-        self.loginPassword = Label(self.userLoginPage,text="Enter your password",justify = LEFT,font ="Helvetica 15 bold italic")
-        self.passwordLoginEntry = Entry(self.userLoginPage,font ="Helvetica 12 bold italic")
-        self.button_user = Button(self.userLoginPage,text = "Login",wraplength=750,anchor="center",height=1,width=13,command=self.checking_data)
+        self.loginUsername = Label(self.userLoginPage,text="Enter your username",justify = LEFT,font ="Helvetica 35 bold italic")
+        self.usernameLoginEntry = Entry(self.userLoginPage,font ="Helvetica 40 bold italic")
+        self.loginPassword = Label(self.userLoginPage,text="Enter your password",justify = LEFT,font ="Helvetica 35 bold italic")
+        self.passwordLoginEntry = Entry(self.userLoginPage,font ="Helvetica 40 bold italic")
+        self.button_user = Button(self.userLoginPage,text = "Login",wraplength=750,anchor="center",height=4,width=57,command=self.checking_data)
 
         #login_user
         self.button1 = Button(self.loginUser,text = "Withdraw Money",wraplength=750,anchor="center",height=1,width=13,command=lambda: self.user_operations("withdraw"))
@@ -209,7 +209,7 @@ class basic_bank_system_gui(Frame):
                             if i == self.usernameLoginEntry.get():
                                 if activities[i][0] > int(money):
                                     self.data.add_activities(int(money),self.usernameLoginEntry.get(),"transfer",transfer_user)
-                                    messagebox.showinfo("Warning","Transferring " + money + "TL to " + transfer_user + "Succeeded.")
+                                    messagebox.showinfo("Warning","Transferring " + money + " TL to " + transfer_user + " Succeeded.")
                                     self.userOperations.grid_remove()
                                     self.login_user()
                                 else:
@@ -226,11 +226,14 @@ class basic_bank_system_gui(Frame):
             self.userOperations.grid_remove()
             showInfo = Frame(self.parent)
             showInfo.grid(row=0,column=0)
-            textInfo = Text(showInfo)
+            textInfo = Text(showInfo,height=15, width=60)
+            vsb = tkinter.ttk.Scrollbar(showInfo, orient="vertical", command=textInfo.yview)
+            vsb.place(x = 585, y=2, height=286)#600x250
+            textInfo.configure(yscrollcommand=vsb.set)
             textInfo.grid(row=0,column=0)
 
             data1 ,data2 = self.data.request_data()
-            textInfo.insert(INSERT,"| __________________________ User Data __________________________ |\n")
+            textInfo.insert(INSERT,"| _____________________ User Data _____________________ |\n")
             for name in data1:
                 if (name == self.usernameLoginEntry.get()):
                     textInfo.insert(INSERT,"Date: " + datetime.today().strftime('%d-%m-%y'))
@@ -244,7 +247,7 @@ class basic_bank_system_gui(Frame):
                     textInfo.insert(INSERT,"Balance : " + str(data1[name][0]))
                     textInfo.insert(INSERT,"\n")
 
-            textInfo.insert(INSERT,"| _________________________ Transactions _________________________ |\n")
+            textInfo.insert(INSERT,"| ____________________ Transactions ___________________ |\n")
             for i in data1:
                 if (i == self.usernameLoginEntry.get()):
                     for message in data1[i][1]:
