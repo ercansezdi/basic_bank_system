@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
+
+__auther__ = "Ercan Sezdi"
+__version__ = "0.3"
+__email__ = "ercansezdizero@gmail.com"
+
 from tkinter import messagebox
 from tkinter import *
 import tkinter.ttk
@@ -100,6 +105,7 @@ class basic_bank_system_gui(Frame):
         self.buttonUser = Button(self.loginPage,text = "Login",wraplength=750,anchor="center",height=4,width=30,command=self.user_login_page)
         self.button_login_exit = Button(self.loginPage,text = "Exit",wraplength=750,anchor="center",height=4,width=30,command = self.parent.destroy)
         #user_login_page
+
         self.loginUsername = Label(self.userLoginPage,text="Enter your username",justify = LEFT,font ="Helvetica 24 bold italic")
         self.usernameLoginEntry = Entry(self.userLoginPage,font ="Helvetica 22 bold italic")
         self.loginPassword = Label(self.userLoginPage,text="Enter your password",justify = LEFT,font ="Helvetica 24 bold italic")
@@ -130,6 +136,7 @@ class basic_bank_system_gui(Frame):
         self.transferEntry_2 =  Entry(self.userOperations,font ="Helvetica 22 bold italic")
         self.transferButton = Button(self.userOperations,text = "Transfer Money",wraplength=750,anchor="center",height=3,width=30,command=lambda:[ self.operation_control("transfer_money",self.transferEntry_2.get(),self.transferEntry_1.get()),self.transferEntry_1.delete(0, 'end'),self.transferEntry_2.delete(0, 'end')])
         self.transferExit = Button(self.userOperations,text = "Close Panel",wraplength=750,anchor="center",height=3,width=30,command=lambda:[self.userOperations.grid_remove(),self.transferEntry_1.delete(0, 'end'),self.transferEntry_2.delete(0, 'end'),self.login_user()])
+
     def user_operations(self,process):
         self.userOperations.grid(row=0,column=0)
         self.loginUser.grid_remove()
