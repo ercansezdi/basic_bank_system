@@ -2,6 +2,11 @@
 # -*- coding: utf8 -*-
 
 
+__auther__ = "Ercan Sezdi"
+__version__ = "0.3"
+__email__ = "ercansezdizero@gmail.com"
+
+
 import datetime
 from time import strftime
 from datetime import datetime

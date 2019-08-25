@@ -1,7 +1,7 @@
 /*
 @auther Ercan sezdi
 @version v0.2
-@date 21/08/2019
+@email ercansezdizero@gmail.com
 */
 #include <iostream>
 #include <ctime> // time library
